@@ -1,0 +1,6 @@
+*
+!init.el
+!/lisp/
+!/lisp/**
+!early-init.el
+!.gitignore
