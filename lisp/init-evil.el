@@ -60,6 +60,8 @@
     "cn" 'next-error
     "cp" 'previous-error
 
+    "c k" '(my/kill-async-shell-buffer :which-key "kill async shell")
+
     "q"  '(:ignore t :which-key "quit/session")
     "qs" 'my/session-save   ; SPC q s -> Saves current directory session
     "ql" 'my/session-load   ; SPC q l -> Search and load a folder session
