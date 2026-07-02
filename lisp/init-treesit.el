@@ -8,6 +8,8 @@
         (bash   "https://github.com/tree-sitter/tree-sitter-bash")
         (json   "https://github.com/tree-sitter/tree-sitter-json")
         (toml   "https://github.com/tree-sitter/tree-sitter-toml")
+        (html   "https://github.com/tree-sitter/tree-sitter-html")
+        (javascript "https://github.com/tree-sitter/tree-sitter-javascript")
         (cmake  "https://github.com/uyha/tree-sitter-cmake")
         (make   "https://github.com/alemuller/tree-sitter-make")))
 
