@@ -9,6 +9,8 @@
 (when (fboundp 'pixel-scroll-precision-mode)
   (pixel-scroll-precision-mode 1))
 
+(setq display-line-numbers-type 'relative)
+
 ;; ===========================================================================
 ;; FONT
 ;; ===========================================================================

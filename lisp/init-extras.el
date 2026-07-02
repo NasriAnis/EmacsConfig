@@ -68,6 +68,7 @@
 ;;   "t" '(:ignore t :which-key "tabs/tree")
 ;;   "tt" #'dirvish-side)
 
+
 ;; ===========================================================================
 ;; Fuzzy-find-everywhere (closer to fzf-lua in your nvim config)
 ;; ===========================================================================
@@ -160,6 +161,7 @@
 (savehist-mode 1) ; Persist minibuffer history across Emacs restarts
 
 
+; Kill async shell buffer / other part of config in compile.el
 (defun my/kill-async-shell-buffer ()
   "Kill the process, buffer, and window for `*Async Shell Command*`."
   (interactive)
@@ -174,7 +176,6 @@
         (kill-buffer buf)
         (when (and win (window-live-p win))
           (delete-window win))))))
-
 
 (provide 'init-extras)
 ;;; init-extras.el ends here

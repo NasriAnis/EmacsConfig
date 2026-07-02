@@ -75,5 +75,6 @@
 (use-package which-key   ; shows available leader bindings as you type SPC
   :config (which-key-mode 1))
 
+
 (provide 'init-evil)
 ;;; init-evil.el ends here
