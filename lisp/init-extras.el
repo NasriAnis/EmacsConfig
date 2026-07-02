@@ -47,27 +47,6 @@
   ("M-h" . centaur-tabs-backward)
   ("M-l" . centaur-tabs-forward))
 
-;; ===========================================================================
-;; MODERN PERFORMANCE FILE TREE (Dirvish)
-;; ===========================================================================
-; (use-package dirvish
-;   :ensure t
-;   :init
-;   (dirvish-override-dired-mode) ; Replace native dired with dirvish everywhere
-;   :config
-;   (setq dirvish-attributes '(vc-state file-size) ; Keep it light and uncluttered
-;         dirvish-side-width 30)
-;
-;   ;; Style the sidebar components safely using standard faces
-;   (with-eval-after-load 'dirvish
-;     (set-face-attribute 'header-line nil :background "#000000" :box nil)
-;     (set-face-attribute 'fringe nil :background "#000000")))
-;
-;; Toggle shortcut under your leader keys (SPC t t)
-;; (my/leader
-;;   "t" '(:ignore t :which-key "tabs/tree")
-;;   "tt" #'dirvish-side)
-
 
 ;; ===========================================================================
 ;; Fuzzy-find-everywhere (closer to fzf-lua in your nvim config)
@@ -104,10 +83,10 @@
   
   ;; Bindings inside Vertico search window
   :bind (:map vertico-map
-              ("C-n" . vertico-next)
-              ("C-p" . vertico-previous)
               ("C-j" . vertico-next)       ; Vim-style down
               ("C-k" . vertico-previous))) ; Vim-style up
+
+;################################################################################
 
 ;; 2. Orderless: The ultimate fuzzy-matching engine
 ;; Allows you to type space-separated terms in any order to narrow down results.
@@ -119,12 +98,16 @@
         ;; Enable partial-completion for files (e.g., matching /u/s/lo to /usr/share/local)
         completion-category-overrides '((file (styles partial-completion)))))
 
+;################################################################################
+
 ;; 3. Marginalia: Adds rich metadata annotations in the minibuffer margin
 ;; Displays file sizes, file permissions, git statuses, and command docstrings!
 (use-package marginalia
   :ensure t
   :init
   (marginalia-mode 1))
+
+;################################################################################
 
 ;; 4. Consult: Interactive search & navigation commands (Matches fzf-lua features)
 (use-package consult
@@ -152,6 +135,8 @@
         register-preview-function #'consult-register-format
         consult-preview-key 'any)) ; Preview immediately on cursor movement
 
+;################################################################################
+
 ;; 5. Native Project File Finder (Like fzf.git_files / project-wide search)
 ;; Uses Emacs' built-in lightweight project manager.
 ;; We only use Alt + p (M-p) to avoid hijacking C-p (up) inside minibuffers.
@@ -160,8 +145,9 @@
 ;; Clean up minibuffer visual style
 (savehist-mode 1) ; Persist minibuffer history across Emacs restarts
 
+;################################################################################
 
-; Kill async shell buffer / other part of config in compile.el
+; Kill async shell buffer / other part of config in init-compile.el fro bottom split window
 (defun my/kill-async-shell-buffer ()
   "Kill the process, buffer, and window for `*Async Shell Command*`."
   (interactive)

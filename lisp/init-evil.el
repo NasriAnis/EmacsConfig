@@ -35,7 +35,8 @@
 
     "b"  '(:ignore t :which-key "buffer")
     "bb" 'switch-to-buffer
-    "bk" 'kill-buffer
+    ;; "bk" 'kill-buffer
+    "bk" 'kill-current-buffer
 
     "w"  '(:ignore t :which-key "window")
     "wv" 'split-window-right
