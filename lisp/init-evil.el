@@ -31,12 +31,14 @@
   (my/leader
     "f"  '(:ignore t :which-key "file")
     "fd" 'dired
-    "fD" 'dired-jump
+    "dd" 'dired-jump
 
     "b"  '(:ignore t :which-key "buffer")
-    "bb" 'switch-to-buffer
-    ;; "bk" 'kill-buffer
-    "bk" 'kill-current-buffer
+    ; "bb" 'switch-to-buffer
+    "bb" 'consult-buffer
+    ; "bk" 'kill-buffer
+    ; "bk" 'kill-current-buffer
+    "bd" 'kill-current-buffer
 
     "w"  '(:ignore t :which-key "window")
     "wv" 'split-window-right

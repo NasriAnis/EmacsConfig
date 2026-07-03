@@ -18,6 +18,7 @@
 (require 'init-sessions)   ; per-project desktop sessions
 (require 'init-terminal)   ; vterm + kitty
 (require 'init-extras)     ; optional packages, commented out by default
+(require 'init-fuzzyfind)
 
 ;; clean up gpg-agent/scdaemon on exit
 (add-hook 'kill-emacs-hook

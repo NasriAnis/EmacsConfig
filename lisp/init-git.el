@@ -3,10 +3,43 @@
 ;; ===========================================================================
 ;; GIT (magit — the tool neogit was built to imitate)
 ;; ===========================================================================
-(use-package magit
-  :commands (magit-status magit-blame magit-log-current))
+; (use-package magit
+;   :commands (magit-status magit-blame magit-log-current))
 ;; evil-collection (loaded in init-evil.el) auto-wires evil keybindings into
 ;; magit's status buffer, so j/k/Enter/etc. just work without extra config.
+
+;; Kill all magit processes via q
+(use-package magit
+  :commands (magit-status magit-blame magit-log-current)
+  :init
+  (setq magit-bury-buffer-function #'magit-mode-quit-window)
+  :config
+  (defun my/magit-kill-all-buffers ()
+    "Kill ALL magit-related buffers, everywhere, no leftovers."
+    (interactive)
+    (magit-mode-quit-window t) ;; t = kill-buffer, restores window layout properly
+    (dolist (buf (buffer-list))
+      (when (with-current-buffer buf
+              (derived-mode-p 'magit-mode 'magit-process-mode))
+        (kill-buffer buf))))
+
+  ;; Bind for vanilla Emacs keybinding users
+  (dolist (map (list magit-status-mode-map
+                      magit-diff-mode-map
+                      magit-log-mode-map
+                      magit-revision-mode-map
+                      magit-stash-mode-map
+                      magit-process-mode-map))
+    (define-key map (kbd "q") #'my/magit-kill-all-buffers))
+
+  ;; Bind for evil-collection, since that's likely what's actually
+  ;; intercepting "q" in your setup
+  (with-eval-after-load 'evil-collection-magit
+    (dolist (mode '(magit-status-mode magit-diff-mode magit-log-mode
+                     magit-revision-mode magit-stash-mode
+                     magit-process-mode))
+      (evil-collection-define-key 'normal (intern (format "%s-map" mode))
+        "q" #'my/magit-kill-all-buffers))))
 
 ;; ===========================================================================
 ;; GIT GUTTER (diff-hl — colored gutter for changed lines, IDE-style)

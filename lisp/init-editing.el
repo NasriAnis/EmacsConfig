@@ -12,9 +12,14 @@
   :config
   ;; Save silently when Emacs is idle for 1 second, or when you switch windows/buffers
   (setq super-save-auto-save-when-idle t
-        super-save-idle-duration 0.0
+        super-save-idle-duration 1.0
         super-save-exclude-modes '("git-commit-mode") ; don't auto-commit empty messages
         super-save-remote-files nil)                  ; don't auto-save over slow SSH connections
+
+  ;; Strict filter: Stop super-save from attempting to save internal/special buffers or folders
+  (setq super-save-exclude-predicates
+    (list (lambda () (string-prefix-p "*" (buffer-name)))
+      (lambda () (derived-mode-p 'dired-mode))))
 
   (super-save-mode 1)
 
@@ -23,3 +28,5 @@
 
 (provide 'init-editing)
 ;;; init-editing.el ends here
+
+
