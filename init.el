@@ -16,7 +16,7 @@
 (require 'init-compile)    ; compile / recompile at project root
 (require 'init-git)        ; magit + diff-hl
 (require 'init-sessions)   ; per-project desktop sessions
-(require 'init-terminal)   ; vterm + kitty
+; (require 'init-terminal)   ; vterm + kitty
 (require 'init-extras)     ; optional packages, commented out by default
 (require 'init-fuzzyfind)
 

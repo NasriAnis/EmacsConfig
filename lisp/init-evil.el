@@ -32,6 +32,7 @@
     "f"  '(:ignore t :which-key "file")
     "fd" 'dired
     "dd" 'dired-jump
+    "ff" '(project-find-file :which-key "find file in project")
 
     "b"  '(:ignore t :which-key "buffer")
     ; "bb" 'switch-to-buffer
@@ -70,8 +71,8 @@
     "ql" 'my/session-load   ; SPC q l -> Search and load a folder session
     "qd" 'my/session-delete ; SPC q d -> Delete a session
 
-    "tt" 'my/vterm-toggle
-    "tk" 'my/open-kitty   ; SPC t k -> opens Kitty as its own window, cd'd here
+    ; "tt" 'my/vterm-toggle
+    ; "tk" 'my/open-kitty   ; SPC t k -> opens Kitty as its own window, cd'd here
 
     "qq" 'save-buffers-kill-terminal))
 

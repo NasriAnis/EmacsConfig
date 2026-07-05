@@ -85,7 +85,8 @@
 ;; 5. Native Project File Finder (Like fzf.git_files / project-wide search)
 ;; Uses Emacs' built-in lightweight project manager.
 ;; We only use Alt + p (M-p) to avoid hijacking C-p (up) inside minibuffers.
-(global-set-key (kbd "M-p") 'project-find-file)
+;; (global-set-key (kbd "M-p") 'project-find-file)
+;; keybinf leader ff can be found inside init-evil.el
 
 ;; Clean up minibuffer visual style
 (savehist-mode 1) ; Persist minibuffer history across Emacs restarts

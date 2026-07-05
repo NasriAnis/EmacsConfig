@@ -5,26 +5,44 @@
   (setq compilation-scroll-output t        ; follow output as it streams
         compilation-ask-about-save nil     ; just save before compiling
         compilation-always-kill t)         ; don't ask to kill a running compile
+
   ;; 0a. Compilation window: bottom split
+  ;; (add-to-list 'display-buffer-alist
+  ;;              '("\\*compilation\\*"
+  ;;                (display-buffer-reuse-window
+  ;;                 display-buffer-in-side-window)
+  ;;                (side . bottom)
+  ;;                (slot . 0)
+  ;;                (window-height . 0.25)
+  ;;                (dedicated . t)
+  ;;                (reusable-frames . visible)))
+  ;; ;; 0b. Async shell command window: bottom split
+  ;; (add-to-list 'display-buffer-alist
+  ;;              '("\\*Async Shell Command\\*"
+  ;;                (display-buffer-reuse-window
+  ;;                 display-buffer-in-side-window)
+  ;;                (side . bottom)
+  ;;                (slot . 1)
+  ;;                (window-height . 0.25)
+  ;;                (dedicated . t)
+  ;;                (reusable-frames . visible)))
+
+  ;; 0a. Compilation window: bottom split (regular window, not side window)
   (add-to-list 'display-buffer-alist
-               '("\\*compilation\\*"
-                 (display-buffer-reuse-window
-                  display-buffer-in-side-window)
-                 (side . bottom)
-                 (slot . 0)
-                 (window-height . 0.25)
-                 (dedicated . t)
-                 (reusable-frames . visible)))
-  ;; 0b. Async shell command window: bottom split
+	       '("\\*compilation\\*"
+		 (display-buffer-reuse-window
+		  display-buffer-at-bottom)
+		 (window-height . 0.4)
+		 (reusable-frames . visible)))
+
+  ;; 0b. Async shell command window: bottom split (regular window, not side window)
   (add-to-list 'display-buffer-alist
                '("\\*Async Shell Command\\*"
-                 (display-buffer-reuse-window
-                  display-buffer-in-side-window)
-                 (side . bottom)
-                 (slot . 1)
-                 (window-height . 0.25)
-                 (dedicated . t)
-                 (reusable-frames . visible)))
+		 (display-buffer-reuse-window
+                  display-buffer-at-bottom)
+		 (window-height . 0.25)
+		 (reusable-frames . visible)))
+
   ;; 1. Parse Rust/Cargo error patterns correctly, with severity-based coloring
   (add-to-list 'compilation-error-regexp-alist 'cargo-error)
   (add-to-list 'compilation-error-regexp-alist 'cargo-warning)

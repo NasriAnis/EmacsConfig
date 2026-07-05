@@ -3,6 +3,24 @@
 ;; config genuinely minimal.
 
 ; ===========================================================================
+; Full sreen splits
+; ===========================================================================
+(defvar my/window-config-before-fullscreen nil)
+
+(defun my/toggle-buffer-fullscreen ()
+  "Toggle current window between full-frame and previous split layout."
+  (interactive)
+  (if (and my/window-config-before-fullscreen
+           (= 1 (length (window-list))))
+      (progn
+        (set-window-configuration my/window-config-before-fullscreen)
+        (setq my/window-config-before-fullscreen nil))
+    (setq my/window-config-before-fullscreen (current-window-configuration))
+    (delete-other-windows)))
+
+(global-set-key (kbd "C-c t f") #'my/toggle-buffer-fullscreen)
+
+; ===========================================================================
 ; TABS (centaur-tabs)
 ; ===========================================================================
 ; (use-package centaur-tabs
