@@ -57,6 +57,7 @@
     "ghp" 'diff-hl-show-hunk
     "ghn" 'diff-hl-next-hunk
     "ghP" 'diff-hl-previous-hunk
+    "g d" '(magit-diff-unstaged :which-key "diff unstaged")
 
     "c"  '(:ignore t :which-key "compile")
     "cc" 'compile
@@ -70,6 +71,7 @@
     "qs" 'my/session-save   ; SPC q s -> Saves current directory session
     "ql" 'my/session-load   ; SPC q l -> Search and load a folder session
     "qd" 'my/session-delete ; SPC q d -> Delete a session
+
 
     ; "tt" 'my/vterm-toggle
     ; "tk" 'my/open-kitty   ; SPC t k -> opens Kitty as its own window, cd'd here
