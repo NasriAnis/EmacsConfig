@@ -32,7 +32,7 @@
     "f"  '(:ignore t :which-key "file")
     "fd" 'dired
     "dd" 'dired-jump
-    "ff" '(project-find-file :which-key "find file in project")
+    "ff" '(find-file :which-key "find file")
 
     "b"  '(:ignore t :which-key "buffer")
     ; "bb" 'switch-to-buffer
@@ -65,7 +65,8 @@
     "cn" 'next-error
     "cp" 'previous-error
 
-    "c k" '(my/kill-async-shell-buffer :which-key "kill async shell")
+    "c k k" '(my/kill-async-shell-buffer :which-key "kill async shell")
+    "c k r" '(my/rerun-async-shell-command :which-key "kill & rerun async shell")
 
     "q"  '(:ignore t :which-key "quit/session")
     "qs" 'my/session-save   ; SPC q s -> Saves current directory session

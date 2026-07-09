@@ -6,27 +6,6 @@
         compilation-ask-about-save nil     ; just save before compiling
         compilation-always-kill t)         ; don't ask to kill a running compile
 
-  ;; 0a. Compilation window: bottom split
-  ;; (add-to-list 'display-buffer-alist
-  ;;              '("\\*compilation\\*"
-  ;;                (display-buffer-reuse-window
-  ;;                 display-buffer-in-side-window)
-  ;;                (side . bottom)
-  ;;                (slot . 0)
-  ;;                (window-height . 0.25)
-  ;;                (dedicated . t)
-  ;;                (reusable-frames . visible)))
-  ;; ;; 0b. Async shell command window: bottom split
-  ;; (add-to-list 'display-buffer-alist
-  ;;              '("\\*Async Shell Command\\*"
-  ;;                (display-buffer-reuse-window
-  ;;                 display-buffer-in-side-window)
-  ;;                (side . bottom)
-  ;;                (slot . 1)
-  ;;                (window-height . 0.25)
-  ;;                (dedicated . t)
-  ;;                (reusable-frames . visible)))
-
   ;; 0a. Compilation window: bottom split (regular window, not side window)
   (add-to-list 'display-buffer-alist
 	       '("\\*compilation\\*"
@@ -65,26 +44,71 @@
                '(cargo-note
                  "^note:.*\n\\s-*--> \\([^:\n]+\\):\\([0-9]+\\):\\([0-9]+\\)"
                  1 2 3 0))   ; type 0 = info (blue/gray)
-  ;; 2. Intercept compilation and force execution from the project root
-  (defun my/compile-at-project-root (orig-fun &rest args)
-    "Force `compile` to run from the root of the current project/git repo."
-    (let ((default-directory (if-let ((proj (project-current)))
-                                  (project-root proj)
-                                default-directory)))
-      (apply orig-fun args)))
-  (advice-add 'compile :around #'my/compile-at-project-root)
-  (advice-add 'recompile :around #'my/compile-at-project-root)
+
   ;; 3. Free up C-k so it falls through to window-movement instead of
   ;;    compilation-previous-error
   (define-key compilation-mode-map (kbd "C-k") nil)
   (with-eval-after-load 'evil-collection-compile
     (evil-collection-define-key 'normal 'compilation-mode-map
       (kbd "C-k") nil)))
+
 ;; 4. When jumping to an error, reuse an existing window instead of
 ;;    splitting to create a new one
 (setq display-buffer-base-action
       '((display-buffer-reuse-window
          display-buffer-use-some-window)))
 ;; leader-key bindings for compile live in init-evil.el (SPC c c / c r / c n / c p / c k)
+
+;; 2. Intercept compilation and force execution from the project root
+; (defun my/compile-at-project-root (orig-fun &rest args)
+;   "Force `compile` to run from the root of the current project/git repo."
+;   (let ((default-directory (if-let ((proj (project-current)))
+;                                 (project-root proj)
+;                               default-directory)))
+;     (apply orig-fun args)))
+; (advice-add 'compile :around #'my/compile-at-project-root)
+; (advice-add 'recompile :around #'my/compile-at-project-root)
+
+(defun my/project-root-or-default ()
+  "Return the current project root, or `default-directory` if none."
+  (if-let ((proj (project-current)))
+      (project-root proj)
+    default-directory))
+
+(defun my/compile-at-project-root (orig-fun &rest args)
+  "Force `compile` to run from the root of the current project/git repo."
+  (let ((default-directory (my/project-root-or-default)))
+    (apply orig-fun args)))
+(advice-add 'compile :around #'my/compile-at-project-root)
+(advice-add 'recompile :around #'my/compile-at-project-root)
+(advice-add 'async-shell-command :around #'my/compile-at-project-root)
+
+
+; Kill async shell buffer / other part of config in init-compile.el fro bottom split window
+(defun my/kill-async-shell-buffer ()
+  "Kill the process, buffer, and window for `*Async Shell Command*`."
+  (interactive)
+  (let ((buf (get-buffer "*Async Shell Command*")))
+    (if (not buf)
+        (message "No async shell command buffer running.")
+      (let ((proc (get-buffer-process buf))
+            (win (get-buffer-window buf)))
+        (when proc
+          (set-process-query-on-exit-flag proc nil)
+          (kill-process proc))
+        (kill-buffer buf)
+        (when (and win (window-live-p win))
+          (delete-window win))))))
+
+(defun my/rerun-async-shell-command ()
+  "Kill the current async shell buffer and rerun the last shell command from project root."
+  (interactive)
+  (my/kill-async-shell-buffer)
+  (if shell-command-history
+      (let ((default-directory (my/project-root-or-default)))
+        (async-shell-command (car shell-command-history)))
+    (message "No previous shell command to rerun.")))
+
+
 (provide 'init-compile)
 ;;; init-compile.el ends here

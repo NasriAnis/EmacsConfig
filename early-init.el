@@ -39,3 +39,5 @@
 
 ;; Quiet native-comp warnings (they're noisy and not actionable day-to-day)
 (setq native-comp-async-report-warnings-errors 'silent)
+
+;; (add-to-list 'default-frame-alist '(undecorated . t))

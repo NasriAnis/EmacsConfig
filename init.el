@@ -19,6 +19,7 @@
 ; (require 'init-terminal)   ; vterm + kitty
 (require 'init-extras)     ; optional packages, commented out by default
 (require 'init-fuzzyfind)
+(require 'init-assembly)
 
 ;; clean up gpg-agent/scdaemon on exit
 (add-hook 'kill-emacs-hook
@@ -29,6 +30,5 @@
                                "--homedir" homedir "--kill" "gpg-agent")
                 (call-process "gpgconf" nil 0 nil
                                "--homedir" homedir "--kill" "scdaemon")))))
-
 (provide 'init)
 ;;; init.el ends here
