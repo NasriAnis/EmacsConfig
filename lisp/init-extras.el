@@ -48,6 +48,13 @@
 ;; Add the corrected, zero-argument version
 (add-hook 'window-configuration-change-hook #'my/kill-dead-dired-buffers)
 
+;################################################################################
+;; higlight parenthesis
+;################################################################################
+(use-package highlight-parentheses
+  :ensure t
+  :hook (prog-mode . highlight-parentheses-mode))
+
 
 (provide 'init-extras)
 ;;; init-extras.el ends here
